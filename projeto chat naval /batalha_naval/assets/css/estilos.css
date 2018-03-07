@@ -1,0 +1,71 @@
+@CHARSET "UTF-8";
+
+html, body {
+	font-family: Verdana;
+	font-size: 11px;
+}
+
+#canvas-player div, #canvas-cpu div {
+	position:relative;
+}
+
+#canvas-player, #canvas-cpu {
+	float: left;
+}
+
+#canvas-cpu {
+	float: right;
+}
+
+.x-letra-topo, .x-letra-linha {
+	text-align: center;
+	background-color: #FFFFFF;
+}
+
+.x-celula {
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+} 
+
+.x-embarcacao {
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.cruzador {
+	background-image: URL(../images/cruzador.gif);
+}
+
+.encouracado {
+	background-image: URL(../images/encouracado.gif);
+}
+
+.hidroaviao {
+	background-image: URL(../images/hidroaviao.gif);
+}
+
+.porta-aviao {
+	background-image: URL(../images/porta-aviao.gif);
+}
+
+.submarino {
+	background-image: URL(../images/submarino.gif);
+}
+
+.tiro_agua {
+	background-color: #9999FF;
+}
+
+.tiro_acerto {
+	background-color: #FFCC00;
+}
+.x-derrubado {
+	background-color: #00CC00;
+}
+
+#log {
+	height: 300px;
+	overflow: auto;
+	padding-left: 10px;
+}
+

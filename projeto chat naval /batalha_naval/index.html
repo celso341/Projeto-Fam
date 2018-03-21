@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
-	
+
 <!-- Mirrored from www.hufersil.com.br/exemplo/batalha_naval/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 02 Mar 2018 23:26:07 GMT -->
 <head>
 		<meta charset="UTF-8">
 		<title>Batalha Naval</title>
-		
+
 		<script src="assets/js/class.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/game.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script type="text/javascript">
 			var t, t2;
 			$(function(){
-				
+
 				t = new Tabuleiro('#canvas-player > div');
 				t.adicionarEmbarcacaoAleatoria(new PortaAviao());
 				t.adicionarEmbarcacaoAleatoria(new PortaAviao());
@@ -24,7 +24,7 @@
 				t.adicionarEmbarcacaoAleatoria(new Submarino());
 				t.adicionarEmbarcacaoAleatoria(new Submarino());
 				t.setPlayer(new Player('jogador'));
-				
+
 				t2 = new Tabuleiro('#canvas-cpu > div');
 				t2.adicionarEmbarcacaoAleatoria(new PortaAviao());
 				t2.adicionarEmbarcacaoAleatoria(new PortaAviao());
@@ -36,41 +36,42 @@
 				t2.adicionarEmbarcacaoAleatoria(new Submarino());
 				t2.exibirEmbarcacoes(false);
 				t2.setPlayer(new CPU('computador'));
-				
+
 				BatalhaNaval.setup(t, t2, $('#log'));
-				
+
 			});
-			
+
 			function logDeTiros(evt, coord, result){
 				console.log(evt.currentTarget);
 				$('#log').append('Result: ' + result + ', row: '+coord.linha+', col: '+coord.coluna+'<br />');
 			}
-			
+
 		</script>
-		
+
 		<link rel="stylesheet" href="assets/css/estilos.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
-		
+
 	</head>
 	<body>
-		<ul>
+
+		<!--ul>
 			<li>Cada jogador tem direito a três tiros</li>
 			<li>Quem derrubar todos os itens do adversário vence</li>
 			<li>O Jogador (você) atira na "área do computador"</li>
-		</ul>
+		</ul-->
 		<div id="canvas-player">
 			<h1>Área do Jogador</h1>
 			<div></div>
 		</div>
-		
+
 		<div id="canvas-cpu">
 			<h1>Área do Computador</h1>
 			<div></div>
 		</div>
-		
+
 		<div id="log">
-			
+
 		</div>
-		
+
 	</body>
 
 <!-- Mirrored from www.hufersil.com.br/exemplo/batalha_naval/ by HTTrack Website Copier/3.x [XR&CO'2010], Fri, 02 Mar 2018 23:26:09 GMT -->

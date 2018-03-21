@@ -10,11 +10,13 @@ html, body {
 }
 
 #canvas-player, #canvas-cpu {
-	float: left;
+	/*float: left;*/
 }
 
 #canvas-cpu {
-	float: right;
+	/*float: right;*/
+	/*float: left;*/
+	height:-300px;
 }
 
 .x-letra-topo, .x-letra-linha {
@@ -25,7 +27,7 @@ html, body {
 .x-celula {
 	border-top: 1px solid black;
 	border-left: 1px solid black;
-} 
+}
 
 .x-embarcacao {
 	background-repeat: no-repeat;
@@ -63,9 +65,12 @@ html, body {
 	background-color: #00CC00;
 }
 
-#log {
-	height: 300px;
+#log { /*Aqui aonde vai o log da conversa da batalha!!*/
+	height: 150px;
+	width: 200px;
 	overflow: auto;
 	padding-left: 10px;
+	/*float:right;*/
+	margin-left: 350px;
+	margin-top:-700px;
 }
-

@@ -1,5 +1,5 @@
 var app = require('express')();
-var http = require('http').Server(app);
+var http = require('https').Server(app);
 var io = require('socket.io')(http);
 
 var clients = {}; 
@@ -30,5 +30,5 @@ io.on("connection", function (client) {
 
 
 http.listen(3000, function(){
-  console.log('listening on port 3000');
+  console.log('listening on port 3000');  //listening on port 3000 conexão Padrão "do site e 21"
 });

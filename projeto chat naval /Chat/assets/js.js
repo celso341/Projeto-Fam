@@ -1,5 +1,5 @@
 $(document).ready(function(){  
-    var socket = io.connect("http://localhost:3000");
+    var socket = io.connect("files.000webhost.com:21");  //"http://localhost:3000" conexão padrão "do site 21"
     var ready = false;
 
     $("#submit").submit(function(e) {

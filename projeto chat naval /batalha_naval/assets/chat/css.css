@@ -177,9 +177,9 @@ input.textarea {
     left: 0px;
     right: 0px;
     width: 50%;
-    height: 50px;
+    height: 850px;
     z-index: 99;
-    background: #fafafa;
+    background: blue;  /* #fafafa */
     border: none;
     outline: none;
     padding:10px;

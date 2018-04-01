@@ -90,17 +90,23 @@ a{
        se não fica descendo as msg
        fica ruim
        */
+    height: 470px;
+    width: 625px;
+    overflow: auto;
+
     list-style: none;
     background: none;
     margin: 0;
-    padding: 0 0 300px 0;
+    padding: 0 0 2px 0;
     margin-top: 60px;
     margin-bottom: 10px;
+
 }
 .chat li {
     padding: 0.5rem;
     overflow: hidden;
     display: flex;
+
 }
 
 .other .msg {
@@ -124,6 +130,7 @@ a{
 .self {
     justify-content: flex-end;
     align-items: flex-end;
+    /*width: 50%;*/
 }
 .self .msg {
     order: 1;
@@ -176,12 +183,12 @@ a{
 /* typping */
 
 input.textarea {
-    /*position: fixed;*/
-    bottom: 0px;
-    left: 0px;
+    position: fixed;
+    bottom: 10px;
+    left: 610px;
     right: 0px;
     width: 50%;
-    height: 50px;
+    /*height: 50px;*/
     z-index: 99;
     background: #fafafa;  /* #fafafa */
     border: none;

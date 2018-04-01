@@ -71,13 +71,13 @@ html, body {
 	overflow: auto;
 	padding-left: 10px;
 	/*float:right;*/
-	margin-left: 490px;
+	margin-left: 370px;
 	margin-top:-700px;
 }
 /* Aqui e o css do chata*/
 .chatnaval{
     /*float: right;*/
-    margin-left:700px;
+    margin-left:600px;
     position: fixed;
     /*margin-top: 100px;*/
     height: 1250px;

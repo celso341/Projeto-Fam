@@ -179,7 +179,7 @@ input.textarea {
     width: 50%;
     height: 850px;
     z-index: 99;
-    background: blue;  /* #fafafa */
+    background: #fafafa;  /* #fafafa */
     border: none;
     outline: none;
     padding:10px;

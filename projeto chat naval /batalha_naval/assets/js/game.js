@@ -265,7 +265,7 @@ Tabuleiro.defaultConfig = {
 	colunas: 10,
 	alfabeto: 'A,B,C,D,E,F,G,H,I,J,'.split(','),
 	largura: 30,
-	altura: 30,
+	altura: 25,
 	letrasNoTopo: false
 }
 

@@ -86,10 +86,14 @@ a{
 /* Msgs */
 
 .chat {
+    /* Aqui tem que deixar fixo
+       se não fica descendo as msg
+       fica ruim
+       */
     list-style: none;
     background: none;
     margin: 0;
-    padding: 0 0 50px 0;
+    padding: 0 0 300px 0;
     margin-top: 60px;
     margin-bottom: 10px;
 }

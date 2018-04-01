@@ -261,9 +261,9 @@ var Tabuleiro = Class.extend({
 });
 
 Tabuleiro.defaultConfig = {
-	linhas: 15,
-	colunas: 15,
-	alfabeto: 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'.split(','),
+	linhas: 10,
+	colunas: 10,
+	alfabeto: 'A,B,C,D,E,F,G,H,I,J,'.split(','),
 	largura: 30,
 	altura: 30,
 	letrasNoTopo: false

@@ -368,9 +368,9 @@ var Player = Class.extend({
 		this.nome = nome;
 	},
 
-	//start: function(){
-	//	alert('Agora é a sua vez!');
-	//},
+	start: function(){
+		/*alert('Agora é a sua vez!');*/
+	},
 
 	setTabuleiroContra: function(tabuleiro){
 		this._tabuleiro = tabuleiro;

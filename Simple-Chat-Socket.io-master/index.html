@@ -3,9 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <title>Simple chat</title>
+
+  <script src="js/class.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/game.js" type="text/javascript" charset="utf-8"></script>
+
   <link rel="stylesheet" href="assets/css.css">
+  <link rel="stylesheet" href="css/estilos.css"> <!-- Este e do jogo-->
+  <!--link rel="stylesheet" href="css.css"-->
+
+  <script type="text/javascript">
+      var t, t2;
+      $(function(){
+
+        t = new Tabuleiro('#canvas-player > div');
+        t.adicionarEmbarcacaoAleatoria(new PortaAviao());
+        t.adicionarEmbarcacaoAleatoria(new PortaAviao());
+        t.adicionarEmbarcacaoAleatoria(new Encouracado());
+        t.adicionarEmbarcacaoAleatoria(new Hidroaviao());
+        t.adicionarEmbarcacaoAleatoria(new Cruzador());
+        t.adicionarEmbarcacaoAleatoria(new Submarino());
+        t.adicionarEmbarcacaoAleatoria(new Submarino());
+        t.adicionarEmbarcacaoAleatoria(new Submarino());
+        t.setPlayer(new Player('jogador'));
+
+        t2 = new Tabuleiro('#canvas-cpu > div');
+        t2.adicionarEmbarcacaoAleatoria(new PortaAviao());
+        t2.adicionarEmbarcacaoAleatoria(new PortaAviao());
+        t2.adicionarEmbarcacaoAleatoria(new Encouracado());
+        t2.adicionarEmbarcacaoAleatoria(new Hidroaviao());
+        t2.adicionarEmbarcacaoAleatoria(new Cruzador());
+        t2.adicionarEmbarcacaoAleatoria(new Submarino());
+        t2.adicionarEmbarcacaoAleatoria(new Submarino());
+        t2.adicionarEmbarcacaoAleatoria(new Submarino());
+        t2.exibirEmbarcacoes(false);
+        t2.setPlayer(new CPU('computador'));
+
+        BatalhaNaval.setup(t, t2, $('#log'));
+
+      });
+
+      function logDeTiros(evt, coord, result){
+        console.log(evt.currentTarget);
+        $('#log').append('Result: ' + result + ', row: '+coord.linha+', col: '+coord.coluna+'<br />');
+      }
+
+    </script>
+
 </head>
 <body>
+
+         <div class="chatnaval"> <!--Aqui começa o Chat-->
 
 <div class="nickname_container" id="nick">
 
@@ -27,8 +75,25 @@
 
   <input class="textarea" type="text" placeholder="Digite aqui!" id="textarea" />
 </div>
+      </div> <!--Aqui termina o Chat-->
+
+  <div id="canvas-player">
+    <h2>Área do Jogador</h2>
+    <div></div>
+  </div>
+
+  <div id="canvas-cpu">
+    <h2>Área do Computador</h2>
+    <div></div>
+  </div>
+
+  <div id="log">
+
+  </div>
+
     <script src="jquery-3.3.1.min.js"></script>
     <script src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script src="assets/js.js"></script>
+
 </body>
 </html>

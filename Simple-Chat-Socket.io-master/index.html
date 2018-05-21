@@ -25,7 +25,8 @@
         t.adicionarEmbarcacaoAleatoria(new Submarino());
         t.adicionarEmbarcacaoAleatoria(new Submarino());
         t.adicionarEmbarcacaoAleatoria(new Submarino());
-        t.setPlayer(new Player('jogador'));
+        t.exibirEmbarcacoes(false);
+        t.setPlayer(new Player('<b>' + 'jogador 1' + '</b>'));
 
         t2 = new Tabuleiro('#canvas-cpu > div');
         t2.adicionarEmbarcacaoAleatoria(new PortaAviao());
@@ -37,7 +38,7 @@
         t2.adicionarEmbarcacaoAleatoria(new Submarino());
         t2.adicionarEmbarcacaoAleatoria(new Submarino());
         t2.exibirEmbarcacoes(false);
-        t2.setPlayer(new CPU('computador'));
+        t2.setPlayer(new Player2('<b>' + 'jogador 2' + '</b>'));
 
         BatalhaNaval.setup(t, t2, $('#log'));
 
@@ -78,18 +79,16 @@
       </div> <!--Aqui termina o Chat-->
 
   <div id="canvas-player">
-    <h2>Área do Jogador</h2>
+    <h2>Área do Jogador 1</h2>
     <div></div>
   </div>
 
   <div id="canvas-cpu">
-    <h2>Área do Computador</h2>
+    <h2>Área do Jogador 2</h2>
     <div></div>
   </div>
 
-  <div id="log">
-
-  </div>
+  <div id="log"></div>
 
     <script src="jquery-3.3.1.min.js"></script>
     <script src="node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>

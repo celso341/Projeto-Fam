@@ -369,7 +369,46 @@ var Player = Class.extend({
 	},
 
 	start: function(){
-		/*alert('Agora é a sua vez!');*/
+		alert('Agora é a vez do Jogador 1');
+	},
+
+	setTabuleiroContra: function(tabuleiro){
+		this._tabuleiro = tabuleiro;
+		tabuleiro.canvas.find('.x-celula').click($.proxy(this.celula_clickHandler, this));
+	},
+
+	jogar: function(coord){
+		var result = this._tabuleiro.verificaTiro(coord);
+		if( result == Tabuleiro.TIRO_INVALIDO ){
+			alert('Você não pode atirar em um lugar que você já atirou antes!');
+		}
+	},
+
+	limparPontosImpacto: function(){
+
+	},
+
+	celula_clickHandler: function(evt){
+		if(BatalhaNaval.jogadorAtual == this){
+			var p = $(evt.currentTarget).data('posicao');
+			this.jogar({
+				linha: p[0],
+				coluna: p[1]
+			});
+		}
+	}
+});
+
+var Player2 = Class.extend({
+	_tabuleiro: null,
+	nome: null,
+
+	init: function(nome){
+		this.nome = nome;
+	},
+
+	start: function(){
+		alert('É a vez do Jogador 2');
 	},
 
 	setTabuleiroContra: function(tabuleiro){
@@ -401,232 +440,232 @@ var Player = Class.extend({
 
 
 // classe para CPU
-var CPU = Player.extend({
+// var CPU = Player.extend({
 
-	lastSucessfullHitPoint: null,
-	prevLastSucessfullHitPoint: null,
-	derrubou: false,
-	direction: null,
-	ultimaEmbarcacao: null,
+// 	lastSucessfullHitPoint: null,
+// 	prevLastSucessfullHitPoint: null,
+// 	derrubou: false,
+// 	direction: null,
+// 	ultimaEmbarcacao: null,
 
-	setTabuleiroContra: function(tabuleiro){
-		this._tabuleiro = tabuleiro;
-		$(tabuleiro).bind('embarcacaoDerrubada', $.proxy(this.limparPontosImpacto, this));
-		$(tabuleiro).bind('logTiro', $.proxy(this.tabuleiro_logTiroHandler, this));
-	},
+// 	setTabuleiroContra: function(tabuleiro){
+// 		this._tabuleiro = tabuleiro;
+// 		$(tabuleiro).bind('embarcacaoDerrubada', $.proxy(this.limparPontosImpacto, this));
+// 		$(tabuleiro).bind('logTiro', $.proxy(this.tabuleiro_logTiroHandler, this));
+// 	},
 
-	start: function(){
-		alert('É a vez de '+this.nome+', aguarde');
-		this.jogar(this.null);
-	},
+// 	start: function(){
+// 		alert('É a vez de '+this.nome+', aguarde');
+// 		this.jogar(this.null);
+// 	},
 
-	jogar: function(coord){
-		var tiro = 0;
+// 	jogar: function(coord){
+// 		var tiro = 0;
 
-		var inter = setInterval($.proxy(function(){
-			var point;
-			if(this.lastSucessfullHitPoint != null) {
-				point = this._getNearestValidPoint();
-			} else {
-				point = this._getRandomTargetPoint();
-			}
+// 		var inter = setInterval($.proxy(function(){
+// 			var point;
+// 			if(this.lastSucessfullHitPoint != null) {
+// 				point = this._getNearestValidPoint();
+// 			} else {
+// 				point = this._getRandomTargetPoint();
+// 			}
 
-			var result = this._tabuleiro.verificaTiro(point);
+// 			var result = this._tabuleiro.verificaTiro(point);
 
-			if(result != Tabuleiro.TIRO_INVALIDO){
-				tiro++;
-			}
+// 			if(result != Tabuleiro.TIRO_INVALIDO){
+// 				tiro++;
+// 			}
 
-			if(tiro == BatalhaNaval.tirosPorRodada){
-				clearInterval(inter);
-			}
+// 			if(tiro == BatalhaNaval.tirosPorRodada){
+// 				clearInterval(inter);
+// 			}
 
-		}, this), 1500);
-	},
+// 		}, this), 1500);
+// 	},
 
 
-	limparPontosImpacto: function(evt){
-		this.prevLastSucessfullHitPoint = null;
-		this.lastSucessfullHitPoint = null;
-		this.derrubou = true;
-		this.direction = null;
-		this.ultimaEmbarcacao = null;
+// 	limparPontosImpacto: function(evt){
+// 		this.prevLastSucessfullHitPoint = null;
+// 		this.lastSucessfullHitPoint = null;
+// 		this.derrubou = true;
+// 		this.direction = null;
+// 		this.ultimaEmbarcacao = null;
 
-		// vamos ver se tem algum outro lugar que esta marcado como
-		// acerto
-		var res = this._tabuleiro.canvas.find('.tiro_acerto');
-		if(res.length){
-			var p = $(res[0]).data('posicao');
-			this.lastSucessfullHitPoint = {
-				linha: p[0],
-				coluna: p[1]
-			}
-		}
-	},
+// 		// vamos ver se tem algum outro lugar que esta marcado como
+// 		// acerto
+// 		var res = this._tabuleiro.canvas.find('.tiro_acerto');
+// 		if(res.length){
+// 			var p = $(res[0]).data('posicao');
+// 			this.lastSucessfullHitPoint = {
+// 				linha: p[0],
+// 				coluna: p[1]
+// 			}
+// 		}
+// 	},
 
-	_getNearestValidPoint: function(){
-		var p = this.prevLastSucessfullHitPoint, l = this.lastSucessfullHitPoint,
-			lookaheadCol = 0,
-			lookaheadRow = 0;
+// 	_getNearestValidPoint: function(){
+// 		var p = this.prevLastSucessfullHitPoint, l = this.lastSucessfullHitPoint,
+// 			lookaheadCol = 0,
+// 			lookaheadRow = 0;
 
-		// se tiver um ponto antes do ultimo
-		if(p || this.direction){
-			if(p){
-				// vamos ver se tem que ser linha ou coluna
-				if(p.coluna < l.coluna) {
-					lookaheadCol = 1;
-					this.direction = Embarcacao.HORIZONTAL;
-				} else if(p.coluna > l.coluna) {
-					lookaheadCol = -1;
-					this.direction = Embarcacao.HORIZONTAL;
-				} else if(p.linha < l.linha) {
-					lookaheadRow = 1;
-					this.direction = Embarcacao.VERTICAL;
-				} else if(p.linha > l.linha) {
-					lookaheadRow = -1;
-					this.direction = Embarcacao.VERTICAL;
-				}
-			} else {
-				if(this.direction == Embarcacao.VERTICAL){
-					lookaheadRow = 1;
-				} else {
-					lookaheadCol = 1;
-				}
-			}
+// 		// se tiver um ponto antes do ultimo
+// 		if(p || this.direction){
+// 			if(p){
+// 				// vamos ver se tem que ser linha ou coluna
+// 				if(p.coluna < l.coluna) {
+// 					lookaheadCol = 1;
+// 					this.direction = Embarcacao.HORIZONTAL;
+// 				} else if(p.coluna > l.coluna) {
+// 					lookaheadCol = -1;
+// 					this.direction = Embarcacao.HORIZONTAL;
+// 				} else if(p.linha < l.linha) {
+// 					lookaheadRow = 1;
+// 					this.direction = Embarcacao.VERTICAL;
+// 				} else if(p.linha > l.linha) {
+// 					lookaheadRow = -1;
+// 					this.direction = Embarcacao.VERTICAL;
+// 				}
+// 			} else {
+// 				if(this.direction == Embarcacao.VERTICAL){
+// 					lookaheadRow = 1;
+// 				} else {
+// 					lookaheadCol = 1;
+// 				}
+// 			}
 
-			// agora, vamos procurar a celula mais proxima
-			// que ainda nao foi feito tiro
-			var c=l.coluna, r=l.linha, cell;
-			if(this.direction == Embarcacao.VERTICAL){
-				while(true){
-					r += lookaheadRow;
-					if(r > this._tabuleiro.config.linhas){
-						lookaheadRow = -1;
-						continue;
-					}
-					if(r < 1){
-						lookaheadRow = 1;
-						continue;
-					}
-					cell = this._tabuleiro.getCelula(r, c);
-					if(cell.hasClass('tiro_agua')){
-						lookaheadRow *= -1;
-						continue
-					}
-					if(cell.hasClass('atirado')){
-						continue;
-					}
-					// se chegou ate aqui, eh uma celula valida
-					break;
-				}
-			}
+// 			// agora, vamos procurar a celula mais proxima
+// 			// que ainda nao foi feito tiro
+// 			var c=l.coluna, r=l.linha, cell;
+// 			if(this.direction == Embarcacao.VERTICAL){
+// 				while(true){
+// 					r += lookaheadRow;
+// 					if(r > this._tabuleiro.config.linhas){
+// 						lookaheadRow = -1;
+// 						continue;
+// 					}
+// 					if(r < 1){
+// 						lookaheadRow = 1;
+// 						continue;
+// 					}
+// 					cell = this._tabuleiro.getCelula(r, c);
+// 					if(cell.hasClass('tiro_agua')){
+// 						lookaheadRow *= -1;
+// 						continue
+// 					}
+// 					if(cell.hasClass('atirado')){
+// 						continue;
+// 					}
+// 					// se chegou ate aqui, eh uma celula valida
+// 					break;
+// 				}
+// 			}
 
-			if(this.direction == Embarcacao.HORIZONTAL){
-				while(true){
-					c += lookaheadCol;
-					if(c > this._tabuleiro.config.colunas){
-						lookaheadCol = -1;
-						continue;
-					}
-					if(c < 1){
-						lookaheadCol = 1;
-						continue;
-					}
-					cell = this._tabuleiro.getCelula(r, c);
-					if(cell.hasClass('tiro_agua')){
-						lookaheadCol *= -1;
-						continue
-					}
-					if(cell.hasClass('atirado')){
-						continue;
-					}
-					// se chegou ate aqui, eh uma celula valida
-					break;
-				}
-			}
+// 			if(this.direction == Embarcacao.HORIZONTAL){
+// 				while(true){
+// 					c += lookaheadCol;
+// 					if(c > this._tabuleiro.config.colunas){
+// 						lookaheadCol = -1;
+// 						continue;
+// 					}
+// 					if(c < 1){
+// 						lookaheadCol = 1;
+// 						continue;
+// 					}
+// 					cell = this._tabuleiro.getCelula(r, c);
+// 					if(cell.hasClass('tiro_agua')){
+// 						lookaheadCol *= -1;
+// 						continue
+// 					}
+// 					if(cell.hasClass('atirado')){
+// 						continue;
+// 					}
+// 					// se chegou ate aqui, eh uma celula valida
+// 					break;
+// 				}
+// 			}
 
-			var p = {
-				linha: r,
-				coluna: c
-			}
+// 			var p = {
+// 				linha: r,
+// 				coluna: c
+// 			}
 
-			return p;
+// 			return p;
 
-		// se nao tem um ponto antes do ultimo
-		} else if(l) {
-			// vamos verificar os pontos ao redor do anterior
-			var c = [];
-			for(var i=1; i<=5; i++){
-				c.push({r: l.linha-i, c:l.coluna});
-				c.push({r: l.linha, c:l.coluna+i});
-				c.push({r: l.linha+i, c:l.coluna});
-				c.push({r: l.linha, c:l.coluna-i});
-			}
+// 		// se nao tem um ponto antes do ultimo
+// 		} else if(l) {
+// 			// vamos verificar os pontos ao redor do anterior
+// 			var c = [];
+// 			for(var i=1; i<=5; i++){
+// 				c.push({r: l.linha-i, c:l.coluna});
+// 				c.push({r: l.linha, c:l.coluna+i});
+// 				c.push({r: l.linha+i, c:l.coluna});
+// 				c.push({r: l.linha, c:l.coluna-i});
+// 			}
 
-			for(var i=0; i<c.length; i++){
-				var cell = c[i];
+// 			for(var i=0; i<c.length; i++){
+// 				var cell = c[i];
 
-				cell.r = Math.min(this._tabuleiro.config.linhas, cell.r);
-				cell.c = Math.min(this._tabuleiro.config.colunas, cell.c);
-				cell.r = Math.max(cell.r, 1);
-				cell.c = Math.max(cell.c, 1);
+// 				cell.r = Math.min(this._tabuleiro.config.linhas, cell.r);
+// 				cell.c = Math.min(this._tabuleiro.config.colunas, cell.c);
+// 				cell.r = Math.max(cell.r, 1);
+// 				cell.c = Math.max(cell.c, 1);
 
-				if(!this._tabuleiro.getCelula(cell.r, cell.c).hasClass('atirado')){
-					return {
-						linha: cell.r,
-						coluna: cell.c
-					};
-				}
-			}
-		}
+// 				if(!this._tabuleiro.getCelula(cell.r, cell.c).hasClass('atirado')){
+// 					return {
+// 						linha: cell.r,
+// 						coluna: cell.c
+// 					};
+// 				}
+// 			}
+// 		}
 
-		return this._getRandomTargetPoint();
-	},
+// 		return this._getRandomTargetPoint();
+// 	},
 
-	_getRandomTargetPoint : function(){
-		var col = Math.max(1, Math.round(Math.random() * this._tabuleiro.config.colunas));
-		var row = Math.max(1, Math.round(Math.random() * this._tabuleiro.config.linhas));
+// 	_getRandomTargetPoint : function(){
+// 		var col = Math.max(1, Math.round(Math.random() * this._tabuleiro.config.colunas));
+// 		var row = Math.max(1, Math.round(Math.random() * this._tabuleiro.config.linhas));
 
-		var point = {
-			linha: row,
-			coluna: col
-		};
+// 		var point = {
+// 			linha: row,
+// 			coluna: col
+// 		};
 
-		return point;
-	},
+// 		return point;
+// 	},
 
-	celula_clickHandler: function(evt){
+// 	celula_clickHandler: function(evt){
 
-	},
+// 	},
 
-	tabuleiro_logTiroHandler: function(evt, coord, result, item){
-		var point = coord;
+// 	tabuleiro_logTiroHandler: function(evt, coord, result, item){
+// 		var point = coord;
 
-		if(result != Tabuleiro.TIRO_INVALIDO){
-			this.prevLastSucessfullHitPoint = null;
-		}
+// 		if(result != Tabuleiro.TIRO_INVALIDO){
+// 			this.prevLastSucessfullHitPoint = null;
+// 		}
 
-		if(this.derrubou){
-			this.derrubou = false;
-			point = null;
-		}
+// 		if(this.derrubou){
+// 			this.derrubou = false;
+// 			point = null;
+// 		}
 
-		if(result == Tabuleiro.TIRO_ACERTO && point){
+// 		if(result == Tabuleiro.TIRO_ACERTO && point){
 
-			// se acertou a embarcacao, mas nao eh a mesma da anterior
-			if(this.ultimaEmbarcacao && this.ultimaEmbarcacao != item){
-				this.prevLastSucessfullHitPoint = null;
-				this.direction = null;
-				console.log(item);
-			} else {
-				this.prevLastSucessfullHitPoint = this.lastSucessfullHitPoint;
-			}
+// 			// se acertou a embarcacao, mas nao eh a mesma da anterior
+// 			if(this.ultimaEmbarcacao && this.ultimaEmbarcacao != item){
+// 				this.prevLastSucessfullHitPoint = null;
+// 				this.direction = null;
+// 				console.log(item);
+// 			} else {
+// 				this.prevLastSucessfullHitPoint = this.lastSucessfullHitPoint;
+// 			}
 
-			this.ultimaEmbarcacao = item;
-			this.lastSucessfullHitPoint = point;
-		}
-	}
-});
+// 			this.ultimaEmbarcacao = item;
+// 			this.lastSucessfullHitPoint = point;
+// 		}
+// 	}
+// });
 
 
 var BatalhaNaval = {

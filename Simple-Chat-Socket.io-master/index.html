@@ -9,7 +9,7 @@
   <script src="js/game.js" type="text/javascript" charset="utf-8"></script>
 
   <link rel="stylesheet" href="assets/css.css">
-  <link rel="stylesheet" href="css/estilos.css"> <!-- Este e do jogo-->
+  <link rel="stylesheet" href="css/estilos.css"> <!-- Este e do jogo-- >
   <!--link rel="stylesheet" href="css.css"-->
 
   <script type="text/javascript">
@@ -25,8 +25,8 @@
         t.adicionarEmbarcacaoAleatoria(new Submarino());
         t.adicionarEmbarcacaoAleatoria(new Submarino());
         t.adicionarEmbarcacaoAleatoria(new Submarino());
-        t.exibirEmbarcacoes(false);
-        t.setPlayer(new Player('<b>' + 'jogador 1' + '</b>'));
+        t.exibirEmbarcacoes(true);
+        t.setPlayer(new Player('<b>' + 'jogador' + '</b>'));
 
         t2 = new Tabuleiro('#canvas-cpu > div');
         t2.adicionarEmbarcacaoAleatoria(new PortaAviao());
@@ -38,7 +38,7 @@
         t2.adicionarEmbarcacaoAleatoria(new Submarino());
         t2.adicionarEmbarcacaoAleatoria(new Submarino());
         t2.exibirEmbarcacoes(false);
-        t2.setPlayer(new Player2('<b>' + 'jogador 2' + '</b>'));
+        t2.setPlayer(new CPU('computador'));
 
         BatalhaNaval.setup(t, t2, $('#log'));
 
@@ -48,44 +48,37 @@
         console.log(evt.currentTarget);
         $('#log').append('Result: ' + result + ', row: '+coord.linha+', col: '+coord.coluna+'<br />');
       }
-
-    </script>
-
+      
+  </script>
 </head>
 <body>
+<div class="chatnaval"> <!--Aqui começa o Chat-->
 
-         <div class="chatnaval"> <!--Aqui começa o Chat-->
+    <div class="nickname_container" id="nick">
+        <span> Seu nome:</span>
+        <form id="submit"><input type="text" id="nickname" /></form>
+    </div>
 
-<div class="nickname_container" id="nick">
+    <div id="chat" hidden>
+        <div class="menu">
+            <div class="name" id="name"></div>
+            <div class="last" id="time"></div>
+        </div>
 
-  <span> Seu nome:</span>
-  <form id="submit"><input type="text" id="nickname" /></form>
+        <ol class="chat"></ol>
+        <input class="textarea" type="text" placeholder="Digite aqui!" id="textarea" />
+    </div>
 
-</div>
-
-<div id="chat" hidden>
-
-  <div class="menu">
-      <div class="name" id="name"></div>
-      <div class="last" id="time"></div>
-  </div>
-
-  <ol class="chat">
-
-  </ol>
-
-  <input class="textarea" type="text" placeholder="Digite aqui!" id="textarea" />
-</div>
-      </div> <!--Aqui termina o Chat-->
+</div> <!--Aqui termina o Chat-->
 
   <div id="canvas-player">
-    <h2>Área do Jogador 1</h2>
-    <div></div>
+      <h2>Área do Jogador</h2>
+      <div></div>
   </div>
 
   <div id="canvas-cpu">
-    <h2>Área do Jogador 2</h2>
-    <div></div>
+      <h2>Área do Computador</h2>
+      <div></div>
   </div>
 
   <div id="log"></div>
